@@ -22,7 +22,7 @@ function authRequiered(roles, redirectTo, getToken = false) {
       !roles.includes(authUser.role)
     ) {
       if(redirectTo) {
-        req.redirectTo(redirectTo);
+        res.redirect(redirectTo);
       } else {
         res.status(403);
         res.send('Forbitten');

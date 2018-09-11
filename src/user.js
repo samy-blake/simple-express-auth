@@ -7,10 +7,12 @@ const config = require('./config');
  * @param {any} username 
  */
 function getUser(username = false) {
-  const userFile = fs.readFileSync(config.userFilePath);
-  if(!userFile) {
+  if(!fs.existsSync(config.userFilePath)) {
     return false;
   }
+
+  const userFile = fs.readFileSync(config.userFilePath);
+  
 
   let result = false;
   try {
@@ -33,7 +35,7 @@ function getUser(username = false) {
  * @param {'new' | 'update'} type 
  */
 function addUser(data, type = 'new') {
-  let fileData = getUser(path);
+  let fileData = getUser();
   if(!fileData) {
     fileData = {};
   }
@@ -63,7 +65,10 @@ function getUserByToken(token) {
     console.error('no user file!!');
     return false;
   }
-  for(let user of userList) {
+  const usernameList = Object.keys(userList);
+
+  for(let username of usernameList) {
+    let user = userList[username];
     if(user.token && user.token === token) {
       return user;
     }

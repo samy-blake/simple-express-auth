@@ -24,7 +24,7 @@ app.get('/add', function (req, res) {
   res.redirect('/');
 });
 
-app.post(
+app.get(
   '/auth-test', 
   simpleAuth.auth(['admin', 'user'], '/'),
   function (req, res) {
